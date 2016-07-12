@@ -12,9 +12,27 @@ client.on('connect', function () {
  
 app.get('/send_data', function (req, res) {
 
-  client.publish('emdo/devices', 'Hello, I am the client');
-  res.send('Sending data!');
-   console.log('Sending data!');
+
+ var data = 
+ //[
+ {
+  	 'uuid': (1111222233300 + Math.floor((Math.random() * 100))).toString() 
+  , 'kw1' : (Math.random() * 10).toFixed(2).toString() 
+  , 'kw2' : (Math.random() * 10).toFixed(2).toString() 
+  };
+ // ];
+  
+  //console.log('Sending data: ' + data);
+  
+  console.log('Sending data: ' + JSON.stringify(data));
+  
+  //MqttMessage message = new MqttMessage();
+  //message.setPayload(data.getBytes());
+  
+  client.publish('emdo/devices', JSON.stringify(data));
+  
+  res.send('Sending data: ' + JSON.stringify(data));
+  
 });
 
 
