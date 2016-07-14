@@ -6,33 +6,23 @@ var client  = mqtt.connect('mqtt://test.mosquitto.org');
  
 
 client.on('connect', function () {
-  client.subscribe('emdo/devices');
-  console.log('Subcribed at: ' + 'emdo/devices');
+	//var uuid = (1111222233300 + Math.floor((Math.random() * 100))).toString() ;
+  //client.subscribe('emdo/devices/'+ uuid);
+  //console.log('Subcribed at: ' + 'emdo/devices/'+ uuid);
 });
  
 app.get('/send_data', function (req, res) {
-
-
+	
+ var uuid = (1111222233300 + Math.floor((Math.random() * 100))).toString() ;
  var data = 
- //[
- {
-  	 'uuid': (1111222233300 + Math.floor((Math.random() * 100))).toString() 
-  , 'kw1' : (Math.random() * 10).toFixed(2).toString() 
+ {  //'uuid': (1111222233300 + Math.floor((Math.random() * 100))).toString() 
+     'kw1' : (Math.random() * 10).toFixed(2).toString() 
   , 'kw2' : (Math.random() * 10).toFixed(2).toString() 
   };
- // ];
-  
-  //console.log('Sending data: ' + data);
   
   console.log('Sending data: ' + JSON.stringify(data));
-  
-  //MqttMessage message = new MqttMessage();
-  //message.setPayload(data.getBytes());
-  
-  client.publish('emdo/devices', JSON.stringify(data));
-  
-  res.send('Sending data: ' + JSON.stringify(data));
-  
+  client.publish('emdo/devices/' + uuid, JSON.stringify(data));
+  res.send('Sending data: ' + JSON.stringify(data)); 
 });
 
 
